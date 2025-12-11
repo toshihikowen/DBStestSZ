@@ -3,10 +3,10 @@ package com.example.githubrepo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "repository_cache", uniqueConstraints = @UniqueConstraint(columnNames = {"owner", "name"}))
+@Table(name = "repository_cache", uniqueConstraints = @UniqueConstraint(columnNames = {"owner", "name"})) // Specifies the table name and a uniqueness rule to prevent duplicate (owner, name) pairs
 public class RepositoryCache {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Lets the database auto-generate numeric IDs
     private Long id;
 
     @Column(nullable = false)

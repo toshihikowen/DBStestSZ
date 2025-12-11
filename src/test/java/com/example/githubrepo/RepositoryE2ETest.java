@@ -26,6 +26,9 @@ class RepositoryE2ETest {
 
     static WireMockServer wireMockServer;
 
+    /**
+     * Starts WireMock server before all tests
+     */
     @BeforeAll
     static void startWireMock() {
         wireMockServer = new WireMockServer(WireMockConfiguration.options().port(8089));
@@ -33,11 +36,18 @@ class RepositoryE2ETest {
         WireMock.configureFor("localhost", 8089);
     }
 
+
+    /**
+     * Stops WireMock server after all tests
+     */
     @AfterAll
     static void stopWireMock() {
         wireMockServer.stop();
     }
 
+    /**
+     * Sets up stub for GitHub API
+     */
     @BeforeEach
     void setupStub() {
         wireMockServer.resetAll();
@@ -53,6 +63,9 @@ class RepositoryE2ETest {
                                 "}")));
     }
 
+    /**
+     * Tests that the repository is retrieved and cached
+     */
     @Test
     void getsRepositoryAndCaches() {
         String url = "http://localhost:" + port + "/repositories/octocat/Hello-World";
@@ -71,6 +84,9 @@ class RepositoryE2ETest {
         assertEquals("octocat/Hello-World", second.getBody().get("fullName"));
     }
 
+    /**
+     * Tests that a 404 is returned for a missing repository
+     */
     @Test
     void returns404ForMissingRepo() {
         WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/repos/unknown/missing"))

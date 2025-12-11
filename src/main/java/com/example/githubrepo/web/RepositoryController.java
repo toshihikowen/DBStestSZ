@@ -14,6 +14,12 @@ public class RepositoryController {
         this.repositoryService = repositoryService;
     }
 
+    /**
+     * Get repository details
+     * @param owner
+     * @param repositoryName
+     * @return
+     */
     @GetMapping("/repositories/{owner}/{repositoryName}")
     public RepositoryResponse getRepository(@PathVariable String owner, @PathVariable String repositoryName) {
         return repositoryService.getRepository(owner, repositoryName);

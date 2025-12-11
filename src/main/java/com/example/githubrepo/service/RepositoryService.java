@@ -18,12 +18,24 @@ public class RepositoryService {
         this.client = client;
     }
 
+    /**
+     * get a repository from GitHub
+     * @param owner
+     * @param name
+     * @return
+     */
     public RepositoryResponse getRepository(String owner, String name) {
         return repository.findByOwnerAndName(owner, name)
                 .map(c -> new RepositoryResponse(c.getFullName(), c.getDescription(), c.getCloneUrl(), c.getStars(), c.getCreatedAt()))
                 .orElseGet(() -> fetchAndCache(owner, name));
     }
 
+    /**
+     * Fetches a repository from GitHub and caches it in the database.
+     * @param owner
+     * @param name
+     * @return
+     */
     private RepositoryResponse fetchAndCache(String owner, String name) {
         GitHubRepoDto dto = client.getRepository(owner, name);
         if (dto == null) {

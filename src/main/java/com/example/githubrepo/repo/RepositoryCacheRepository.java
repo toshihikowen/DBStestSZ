@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface RepositoryCacheRepository extends JpaRepository<RepositoryCache, Long> {
+public interface RepositoryCacheRepository extends JpaRepository<RepositoryCache, Long> { // Extends JpaRepository to inherit CRUD methods; manages RepositoryCache entities with primary key type Long
     Optional<RepositoryCache> findByOwnerAndName(String owner, String name);
 }
